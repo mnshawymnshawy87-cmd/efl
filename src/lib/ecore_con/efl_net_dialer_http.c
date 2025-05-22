@@ -1752,7 +1752,7 @@ _efl_net_dialer_http_efl_io_closer_close(Eo *o, Efl_Net_Dialer_Http_Data *pd)
      }
    if (pd->fdhandler)
      {
-        ERR("dialer=%p fdhandler=%p still alive!", o, pd->fdhandler);
+        DBG("dialer=%p fdhandler=%p still alive!", o, pd->fdhandler);
         efl_del(pd->fdhandler);
         pd->fdhandler = NULL;
      }
