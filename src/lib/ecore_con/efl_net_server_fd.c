@@ -382,7 +382,7 @@ _efl_net_server_fd_reuse_port_set(Eo *o, Efl_Net_Server_Fd_Data *pd, Eina_Bool r
    value = reuse_port;
    if (setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, (const char *)&value, sizeof(value)) != 0)
      {
-        ERR("setsockopt(" SOCKET_FMT ", SOL_SOCKET, SO_REUSEPORT, %d): %s",
+        DBG("setsockopt(" SOCKET_FMT ", SOL_SOCKET, SO_REUSEPORT, %d): %s",
             fd, value, eina_error_msg_get(efl_net_socket_error_get()));
         pd->reuse_port = old;
         return EINA_FALSE;
