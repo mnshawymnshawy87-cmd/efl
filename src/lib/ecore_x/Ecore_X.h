@@ -1054,6 +1054,13 @@ struct _Ecore_X_Event_Generic
    void        *data;
 };
 
+struct _Ecore_X_Keyboard_Repeat
+{
+   int delay;
+   int rate;
+};
+typedef struct _Ecore_X_Keyboard_Repeat Ecore_X_Keyboard_Repeat;
+
 typedef enum Ecore_X_Present_Event_Mask
 {
     ECORE_X_PRESENT_EVENT_MASK_NO_EVENT = 0,
@@ -2058,6 +2065,9 @@ EAPI void             ecore_x_window_button_grab(Ecore_X_Window win, int button,
 EAPI void             ecore_x_window_button_ungrab(Ecore_X_Window win, int button, int mod, int any_mod);
 EAPI void             ecore_x_window_key_grab(Ecore_X_Window win, const char *key, int mod, int any_mod);
 EAPI void             ecore_x_window_key_ungrab(Ecore_X_Window win, const char *key, int mod, int any_mod);
+
+EAPI Eina_Bool        ecore_x_keyboard_repeat_set(Ecore_X_Display *display, Ecore_X_Keyboard_Repeat *repeat);
+EAPI Eina_Bool        ecore_x_keyboard_repeat_get(Ecore_X_Display *display, Ecore_X_Keyboard_Repeat *repeat);
 
 EAPI void             ecore_x_focus_reset(void);
 EAPI void             ecore_x_events_allow_all(void);

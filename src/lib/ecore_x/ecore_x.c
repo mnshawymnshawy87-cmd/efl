@@ -1,3 +1,5 @@
+#include <X11/XKBlib.h>
+#include <X11/extensions/XKB.h>
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif /* ifdef HAVE_CONFIG_H */
@@ -2115,12 +2117,40 @@ _ecore_x_key_grab_resume(void)
      }
 }
 
+EAPI Eina_Bool
+ecore_x_keyboard_repeat_set(Ecore_X_Display *display, Ecore_X_Keyboard_Repeat *repeat)
+{
+   XkbDescPtr xkb = XkbAllocKeyboard();
+   if (!xkb || XkbGetControls(display, XkbRepeatKeysMask, xkb) != Success)
+     {
+	    if (xkb)
+		  XkbFreeKeyboard(xkb, 0, True);
+        return EINA_FALSE;
+     }
+   
+   xkb->ctrls->repeat_delay = repeat->delay;
+   xkb->ctrls->repeat_interval = repeat->rate;
+   XkbSetControls(display, XkbRepeatKeysMask, xkb);
+   XkbFreeKeyboard(xkb, 0, True);
+   return EINA_TRUE;
+}
 
-
-
-
-
-
+EAPI Eina_Bool
+ecore_x_keyboard_repeat_get(Ecore_X_Display *display, Ecore_X_Keyboard_Repeat *repeat)
+{
+	XkbDescPtr xkb = XkbAllocKeyboard();
+	if (!xkb || XkbGetControls(display, XkbRepeatKeysMask, xkb) != Success)
+	  {
+	     if (xkb)
+		   XkbFreeKeyboard(xkb, 0, True);
+	     return EINA_FALSE;
+      }
+	
+	repeat->delay = xkb->ctrls->repeat_delay;
+	repeat->rate  = xkb->ctrls->repeat_interval;
+	XkbFreeKeyboard(xkb, 0, True);
+	return EINA_TRUE;
+}
 
 /**
  * Send client message with given type and format 32.
