@@ -4085,10 +4085,9 @@ _status_config_scrolling(Evas_Object *win,
    evas_object_smart_callback_add(sl, "changed", smooth_win_round, NULL);
    evas_object_smart_callback_add(sl, "delay,changed", smooth_win_change, NULL);
 
+   evas_object_data_set(win, "scrolling", sc);
 
-   evas_object_data_set(win, "scrolling", bx);
-
-   elm_naviframe_item_simple_push(naviframe, bx);
+   elm_naviframe_item_simple_push(naviframe, sc);
 }
 
 static void
