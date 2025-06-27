@@ -2117,7 +2117,6 @@ _ecore_x_key_grab_resume(void)
      }
 }
 
-#ifdef ECORE_XKB
 /**
  * Sets the keyboard repeat info.
  *
@@ -2128,11 +2127,12 @@ _ecore_x_key_grab_resume(void)
 EAPI Eina_Bool
 ecore_x_keyboard_repeat_set(Ecore_X_Keyboard_Repeat *repeat)
 {
+#ifdef ECORE_XKB
    XkbDescPtr xkb = XkbAllocKeyboard();
    if (!xkb || XkbGetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) != Success)
      {
-	    if (xkb)
-		  XkbFreeKeyboard(xkb, 0, True);
+        if (xkb)
+          XkbFreeKeyboard(xkb, 0, True);
         return EINA_FALSE;
      }
    
@@ -2141,10 +2141,13 @@ ecore_x_keyboard_repeat_set(Ecore_X_Keyboard_Repeat *repeat)
    if (XkbSetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) == False)
      {
         XkbFreeKeyboard(xkb, 0, True);
-		return EINA_FALSE;
+        return EINA_FALSE;
      }
    XkbFreeKeyboard(xkb, 0, True);
    return EINA_TRUE;
+#else
+   return EINA_FALSE;
+#endif /* ECORE_XKB */
 }
 
 /**
@@ -2157,20 +2160,24 @@ ecore_x_keyboard_repeat_set(Ecore_X_Keyboard_Repeat *repeat)
 EAPI Eina_Bool
 ecore_x_keyboard_repeat_get(Ecore_X_Keyboard_Repeat *repeat)
 {
-	XkbDescPtr xkb = XkbAllocKeyboard();
-	if (!xkb || XkbGetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) != Success)
-	  {
-	     if (xkb)
-		   XkbFreeKeyboard(xkb, 0, True);
-	     return EINA_FALSE;
-      }
-	
-	repeat->delay = xkb->ctrls->repeat_delay;
-	repeat->rate  = xkb->ctrls->repeat_interval;
-	XkbFreeKeyboard(xkb, 0, True);
-	return EINA_TRUE;
-}
+#ifdef ECORE_XKB
+   XkbDescPtr xkb = XkbAllocKeyboard();
+   if (!xkb || XkbGetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) != Success)
+     {
+        if (xkb)
+          XkbFreeKeyboard(xkb, 0, True);
+        return EINA_FALSE;
+     }
+   
+   repeat->delay = xkb->ctrls->repeat_delay;
+   repeat->rate  = xkb->ctrls->repeat_interval;
+   XkbFreeKeyboard(xkb, 0, True);
+   return EINA_TRUE;
+#else
+   return EINA_FALSE;
 #endif /* ECORE_XKB */
+}
+
 
 /**
  * Send client message with given type and format 32.
