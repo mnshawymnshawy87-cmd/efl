@@ -2117,11 +2117,19 @@ _ecore_x_key_grab_resume(void)
      }
 }
 
+#ifdef ECORE_XKB
+/**
+ * Sets the keyboard repeat info.
+ *
+ * @param repeat   Values to set
+ *
+ * @return @c EINA_TRUE on success, @c EINA_FALSE otherwise.
+ */
 EAPI Eina_Bool
-ecore_x_keyboard_repeat_set(Ecore_X_Display *display, Ecore_X_Keyboard_Repeat *repeat)
+ecore_x_keyboard_repeat_set(Ecore_X_Keyboard_Repeat *repeat)
 {
    XkbDescPtr xkb = XkbAllocKeyboard();
-   if (!xkb || XkbGetControls(display, XkbRepeatKeysMask, xkb) != Success)
+   if (!xkb || XkbGetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) != Success)
      {
 	    if (xkb)
 		  XkbFreeKeyboard(xkb, 0, True);
@@ -2130,16 +2138,27 @@ ecore_x_keyboard_repeat_set(Ecore_X_Display *display, Ecore_X_Keyboard_Repeat *r
    
    xkb->ctrls->repeat_delay = repeat->delay;
    xkb->ctrls->repeat_interval = repeat->rate;
-   XkbSetControls(display, XkbRepeatKeysMask, xkb);
+   if (XkbSetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) == False)
+     {
+        XkbFreeKeyboard(xkb, 0, True);
+		return EINA_FALSE;
+     }
    XkbFreeKeyboard(xkb, 0, True);
    return EINA_TRUE;
 }
 
+/**
+ * Gets the current keyboard repeat info.
+ *
+ * @param repeat   Pointer to struct to fill parameters in.
+ *
+ * @return @c EINA_TRUE on success, @c EINA_FALSE otherwise.
+ */
 EAPI Eina_Bool
-ecore_x_keyboard_repeat_get(Ecore_X_Display *display, Ecore_X_Keyboard_Repeat *repeat)
+ecore_x_keyboard_repeat_get(Ecore_X_Keyboard_Repeat *repeat)
 {
 	XkbDescPtr xkb = XkbAllocKeyboard();
-	if (!xkb || XkbGetControls(display, XkbRepeatKeysMask, xkb) != Success)
+	if (!xkb || XkbGetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) != Success)
 	  {
 	     if (xkb)
 		   XkbFreeKeyboard(xkb, 0, True);
@@ -2151,6 +2170,7 @@ ecore_x_keyboard_repeat_get(Ecore_X_Display *display, Ecore_X_Keyboard_Repeat *r
 	XkbFreeKeyboard(xkb, 0, True);
 	return EINA_TRUE;
 }
+#endif /* ECORE_XKB */
 
 /**
  * Send client message with given type and format 32.
@@ -2164,7 +2184,7 @@ ecore_x_keyboard_repeat_get(Ecore_X_Display *display, Ecore_X_Keyboard_Repeat *r
  * @param d3      The client message data item 4
  * @param d4      The client message data item 5
  *
- * @return @c EINA_TRUE on success @c EINA_FALSE otherwise.
+ * @return @c EINA_TRUE on success, @c EINA_FALSE otherwise.
  */
 EAPI Eina_Bool
 ecore_x_client_message32_send(Ecore_X_Window win,
