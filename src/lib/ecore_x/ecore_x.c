@@ -2123,6 +2123,7 @@ _ecore_x_key_grab_resume(void)
  * @param repeat   Values to set
  *
  * @return @c EINA_TRUE on success, @c EINA_FALSE otherwise.
+ * @since 1.29
  */
 EAPI Eina_Bool
 ecore_x_keyboard_repeat_set(Ecore_X_Keyboard_Repeat *repeat)
@@ -2156,6 +2157,7 @@ ecore_x_keyboard_repeat_set(Ecore_X_Keyboard_Repeat *repeat)
  * @param repeat   Pointer to struct to fill parameters in.
  *
  * @return @c EINA_TRUE on success, @c EINA_FALSE otherwise.
+ * @since 1.29
  */
 EAPI Eina_Bool
 ecore_x_keyboard_repeat_get(Ecore_X_Keyboard_Repeat *repeat)

@@ -2066,7 +2066,9 @@ EAPI void             ecore_x_window_button_ungrab(Ecore_X_Window win, int butto
 EAPI void             ecore_x_window_key_grab(Ecore_X_Window win, const char *key, int mod, int any_mod);
 EAPI void             ecore_x_window_key_ungrab(Ecore_X_Window win, const char *key, int mod, int any_mod);
 
+/**< @since 1.29 */
 EAPI Eina_Bool        ecore_x_keyboard_repeat_set(Ecore_X_Keyboard_Repeat *repeat);
+/**< @since 1.29 */
 EAPI Eina_Bool        ecore_x_keyboard_repeat_get(Ecore_X_Keyboard_Repeat *repeat);
 
 EAPI void             ecore_x_focus_reset(void);
