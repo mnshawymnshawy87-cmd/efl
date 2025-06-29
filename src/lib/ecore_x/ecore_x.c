@@ -2130,13 +2130,14 @@ ecore_x_keyboard_repeat_set(Ecore_X_Keyboard_Repeat *repeat)
 {
 #ifdef ECORE_XKB
    XkbDescPtr xkb = XkbAllocKeyboard();
-   if (!xkb || XkbGetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) != Success)
+   if ((!xkb) ||
+       (XkbGetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) != Success))
      {
         if (xkb)
           XkbFreeKeyboard(xkb, 0, True);
         return EINA_FALSE;
      }
-   
+
    xkb->ctrls->repeat_delay = repeat->delay;
    xkb->ctrls->repeat_interval = repeat->rate;
    if (XkbSetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) == False)
@@ -2164,13 +2165,14 @@ ecore_x_keyboard_repeat_get(Ecore_X_Keyboard_Repeat *repeat)
 {
 #ifdef ECORE_XKB
    XkbDescPtr xkb = XkbAllocKeyboard();
-   if (!xkb || XkbGetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) != Success)
+   if ((!xkb) ||
+       (XkbGetControls(_ecore_x_disp, XkbRepeatKeysMask, xkb) != Success))
      {
         if (xkb)
           XkbFreeKeyboard(xkb, 0, True);
         return EINA_FALSE;
      }
-   
+
    repeat->delay = xkb->ctrls->repeat_delay;
    repeat->rate  = xkb->ctrls->repeat_interval;
    XkbFreeKeyboard(xkb, 0, True);
