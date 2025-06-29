@@ -493,6 +493,7 @@ typedef struct _Ecore_X_Randr_Crtc_Info                    Ecore_X_Randr_Crtc_In
 
 typedef struct _Ecore_X_Xdnd_Position                      Ecore_X_Xdnd_Position;
 
+typedef struct _Ecore_X_Keyboard_Repeat                    Ecore_X_Keyboard_Repeat;
 
 struct _Ecore_X_Event_Mouse_In
 {
@@ -1059,7 +1060,6 @@ struct _Ecore_X_Keyboard_Repeat
    int delay;
    int rate;
 };
-typedef struct _Ecore_X_Keyboard_Repeat Ecore_X_Keyboard_Repeat;
 
 typedef enum Ecore_X_Present_Event_Mask
 {
