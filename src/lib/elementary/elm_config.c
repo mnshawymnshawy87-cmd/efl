@@ -3206,7 +3206,13 @@ _env_get(void)
    s = _getenv_once("ELM_AUTO_THROTTLE_AMOUNT");
    if (s) _elm_config->auto_throttle_amount = _elm_atof(s);
    s = _getenv_once("ELM_AUTO_NORENDER_WITHDRAWN");
-   if (s) _elm_config->auto_norender_withdrawn = EINA_TRUE;
+   if (s)
+    {
+      if (atoi(s) == 1)
+        _elm_config->auto_norender_withdrawn = EINA_TRUE;
+      else
+        _elm_config->auto_norender_withdrawn = EINA_FALSE;
+    }
    s = _getenv_once("ELM_AUTO_NORENDER_ICONIFIED_SAME_AS_WITHDRAWN");
    if (s) _elm_config->auto_norender_iconified_same_as_withdrawn = EINA_TRUE;
    s = _getenv_once("ELM_AUTO_FLUSH_WITHDRAWN");
