@@ -221,7 +221,6 @@ group { name: "elm/border/base/default";
 
       /* top title bar - spacer and clipper */
       rect { "top_clip"; //nomouse;
-         scale: 1;
          desc { "default";
             rel1.to: "shadow_base";
             rel2.to_x: "shadow_base";
