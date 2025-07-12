@@ -166,6 +166,8 @@ skip:
    return 0;
 }
 
+static Eina_Bool _ecore_x_error_display_still_there = EINA_FALSE;
+
 static int
 _ecore_x_io_error_handle(Display *d)
 {
@@ -173,9 +175,22 @@ _ecore_x_io_error_handle(Display *d)
      {
         if (_io_error_func)
           {
+             char *dpname = DisplayString(_ecore_x_disp);
+
+             if (dpname) dpname = strdup(dpname);
+
              _ecore_x_disp = NULL;
              _ecore_x_shutdown();
+
+             _ecore_x_disp = XOpenDisplay(dpname);
+             if (_ecore_x_disp)
+               {
+                  _ecore_x_error_display_still_there = EINA_TRUE;
+                  XCloseDisplay(_ecore_x_disp);
+               }
+             free(dpname);
              _io_error_func(_io_error_data);
+             _ecore_x_error_display_still_there = EINA_FALSE;
           }
         else
           exit(-1);
@@ -184,3 +199,8 @@ _ecore_x_io_error_handle(Display *d)
    return 0;
 }
 
+EAPI Eina_Bool
+ecore_x_io_error_display_still_there_get(void)
+{
+  return _ecore_x_error_display_still_there;
+}

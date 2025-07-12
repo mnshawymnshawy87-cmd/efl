@@ -1443,6 +1443,7 @@ EAPI Ecore_X_Time              ecore_x_current_time_get(void);
 
 EAPI void                      ecore_x_error_handler_set(void (*func)(void *data), const void *data);
 EAPI void                      ecore_x_io_error_handler_set(void (*func)(void *data), const void *data);
+EAPI Eina_Bool                 ecore_x_io_error_display_still_there_get(void);  /**< @since 1.29 */
 EAPI int                       ecore_x_error_request_get(void);
 EAPI int                       ecore_x_error_code_get(void);
 EAPI Ecore_X_ID                ecore_x_error_resource_id_get(void);
