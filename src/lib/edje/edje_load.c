@@ -2393,7 +2393,7 @@ _edje_collection_free(Edje_File *edf, Edje_Part_Collection *ec, Edje_Part_Collec
         // technically need this - but we ASSUME we use "one_big" so everything gets
         // freed in one go lower down when we del the mempool... but what if pool goes
         // "over"?
-        eina_mempool_free(ce->mp->mp.part, ep);
+        if (ce) eina_mempool_free(ce->mp->mp.part, ep);
      }
    free(ec->parts);
    ec->parts = NULL;
@@ -2434,7 +2434,7 @@ _edje_collection_free(Edje_File *edf, Edje_Part_Collection *ec, Edje_Part_Collec
    eina_hash_free(ec->aliased);
 
    /* Destroy all part and description. */
-   edje_cache_emp_free(ce);
+   if (ce) edje_cache_emp_free(ce);
    free(ec);
 }
 
