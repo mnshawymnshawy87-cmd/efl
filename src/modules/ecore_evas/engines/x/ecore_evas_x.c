@@ -3893,15 +3893,27 @@ _deliver_content(Ecore_Evas *ee, Ecore_Evas_Engine_Data_X11 *edata, Ecore_Evas_S
 
         for (i = 0; i < files->num_files ; i++)
           {
-             uri = efreet_uri_decode(files->files[i]);
-             if (uri)
+             const char *f = files->files[i];
+
+             if (f[0] == '#') // a comment!
                {
-                  eina_strbuf_append(strbuf, uri->path);
-                  efreet_uri_free(uri);
+                 // add " //..//COMMENT\n" as files beginning with space
+                 // not likely and then //..// even less likely
+                 eina_strbuf_append(strbuf, " //..//");
+                 eina_strbuf_append(strbuf, f);
                }
              else
                {
-                  eina_strbuf_append(strbuf, files->files[i]);
+                  uri = efreet_uri_decode(f);
+                  if (uri)
+                    {
+                       eina_strbuf_append(strbuf, uri->path);
+                       efreet_uri_free(uri);
+                    }
+                 else
+                    {
+                       eina_strbuf_append(strbuf, f);
+                    }
                }
              if (i < (files->num_files - 1))
                eina_strbuf_append(strbuf, "\n");

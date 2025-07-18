@@ -793,9 +793,10 @@ _ecore_x_selection_parser_files(const char *target,
         is = 0;
         while ((is < size) && (data[is]))
           {
-             if ((i == 0) && (data[is] == '#'))
-               for (; ((data[is]) && (data[is] != '\n')); is++) ;
-             else
+// keep comments as files so elm can provide them in the file list
+//             if ((i == 0) && (data[is] == '#'))
+//               for (; ((data[is]) && (data[is] != '\n')); is++) ;
+//             else
                {
                   if ((data[is] != '\r') &&
                       (data[is] != '\n'))
