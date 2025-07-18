@@ -777,6 +777,8 @@ _edje_cache_coll_clean(Edje_File *edf)
         edf->collection_cache = eina_list_remove_list(edf->collection_cache, eina_list_last(edf->collection_cache));
 
         ce = eina_hash_find(edf->collection, edc->part);
+        if (!ce)
+           ERR("Can't find part '%s' in edje file '%s'", edc->part, edf->path);
         _edje_collection_free(edf, edc, ce);
      }
 }
@@ -796,6 +798,8 @@ _edje_cache_coll_flush(Edje_File *edf)
                                                       last);
 
         ce = eina_hash_find(edf->collection, edc->part);
+        if (!ce)
+           ERR("Can't find part '%s' in edje file '%s'", edc->part, edf->path);
         _edje_collection_free(edf, edc, ce);
      }
 }
@@ -811,7 +815,7 @@ _edje_cache_coll_unref(Edje_File *edf, Edje_Part_Collection *edc)
    ce = eina_hash_find(edf->collection, edc->part);
    if (!ce)
      {
-        ERR("Something is wrong with reference count of '%s'.", edc->part);
+        ERR("Can't find part '%s' in edje file '%s'", edc->part, edf->path);
      }
    else if (ce->ref)
      {
