@@ -26,32 +26,6 @@ group { name: "e/fileman/default/list/variable";
             visible: 1;
          }
       }
-      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
-         scale: 1;
-         description { state: "default" 0.0;
-            rel1.offset: 4 4;
-            rel1.relative: 1.0 0.0;
-            rel1.to_x: "icon0";
-            rel2.offset: -5 -5;
-            rel2.relative: 1.0 1.0;
-            color_class: "/fg/normal/list/item";
-            text { font: FN; size: 10;
-               min: 0 1;
-               align: 0.0 0.5;
-               text_class: "ilist_item";
-               ellipsis: 0.0;
-            }
-            offscale;
-         }
-         description { state: "selected" 0.0;
-            inherit: "default" 0.0;
-            color_class: "/fg/selected/list/item";
-         }
-         description { state: "disabled" 0.0;
-            inherit: "default" 0.0;
-            color_class: "/fg/disabled/list/item";
-         }
-      }
 //////////////////////////
       part { name: "icon0"; type: SPACER;
          scale: 1;
@@ -97,6 +71,32 @@ group { name: "e/fileman/default/list/variable";
          description { state: "default" 0.0;
             rel.to: "icon0";
             fixed: 1 1;
+         }
+      }
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: 4 4;
+            rel1.relative: 1.0 0.0;
+            rel1.to_x: "icon0";
+            rel2.offset: -5 -5;
+            rel2.relative: 1.0 1.0;
+            color_class: "/fg/normal/list/item";
+            text { font: FN; size: 10;
+               min: 0 1;
+               align: 0.0 0.5;
+               text_class: "ilist_item";
+               ellipsis: 0.0;
+            }
+            offscale;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            color_class: "/fg/selected/list/item";
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            color_class: "/fg/disabled/list/item";
          }
       }
       part { name: "icon_over"; type: RECT; mouse_events: 0;
@@ -1420,33 +1420,6 @@ group { name: "e/fileman/default/icon/fixed";
             offscale;
          }
       }
-      part { name: "e.text.label"; type: TEXTBLOCK; mouse_events: 0;
-         scale: 1;
-         clip_to: "textmaster";
-         description { state: "default" 0.0;
-            align: 0.5 0.0;
-            rel.to: "label0";
-            rel1.relative: 0.0 -1.2;
-            text {
-               style: "fileman_icon_name";
-               align: 0.5 0.0;
-               text_class: "fileman_icon";
-            }
-            fixed: 1 1;
-         }
-         description { state: "selected" 0.0;
-            inherit: "default" 0.0;
-            text.style: "fileman_icon_name_selected";
-         }
-      }
-      part { name: "textmaster"; type: RECT;
-         description { state: "default" 0.0;
-         }
-         description { state: "hidden" 0.0;
-            inherit: "default" 0.0;
-            visible: 0;
-         }
-      }
 //////////////////////////
       part { name: "icon0"; type: SPACER;
          scale: 1;
@@ -1491,6 +1464,14 @@ group { name: "e/fileman/default/icon/fixed";
             rel.to: "icon0";
          }
       }
+      part { name: "textmaster"; type: RECT;
+         description { state: "default" 0.0;
+         }
+         description { state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
       part { name: "icon_over"; type: RECT; mouse_events: 0;
          clip_to: "icon";
          description { state: "default" 0.0;
@@ -1506,6 +1487,25 @@ group { name: "e/fileman/default/icon/fixed";
             inherit: "default" 0.0;
             color: 255 255 255 0; // no cc
             visible: 0;
+         }
+      }
+      part { name: "e.text.label"; type: TEXTBLOCK; mouse_events: 0;
+         scale: 1;
+         clip_to: "textmaster";
+         description { state: "default" 0.0;
+            align: 0.5 0.0;
+            rel.to: "label0";
+            rel1.relative: 0.0 -1.2;
+            text {
+               style: "fileman_icon_name";
+               align: 0.5 0.0;
+               text_class: "fileman_icon";
+            }
+            fixed: 1 1;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            text.style: "fileman_icon_name_selected";
          }
       }
       part { name: "link"; mouse_events: 0;
@@ -1772,6 +1772,155 @@ group { name: "e/fileman/desktop/icon/fixed";
          target: "back";
       }
    }
+}
+
+group { name: "e/fileman/full/icon/fixed";
+  inherit: "e/fileman/desktop/icon/fixed";
+  alias: "e/fileman/full/icon/variable";
+  images.image: "grad-v-dn.png" COMP;
+  parts {
+    part { name: "icon0";
+      description { state: "default" 0.0;
+        rel1.offset: 0 0;
+        rel2.offset: -1 -1;
+        rel2.relative: 1.0 1.0;
+        rel2.to_y: "";
+      }
+    }
+    part { name: "icon";
+      description { state: "default" 0.0;
+      }
+      description { state: "start" 0.0;
+        color: 255 255 255 0;
+        max: 99999 99999;
+      }
+      description { state: "visible" 0.0;
+        color: 255 255 255 255;
+      }
+    }
+    part { name: "icon_over";
+      description { state: "default" 0.0;
+        visible: 0;
+      }
+      description { state: "start" 0.0;
+        visible: 0;
+      }
+      description { state: "visible" 0.0;
+        visible: 0;
+      }
+    }
+    part { name: "link";
+      description { state: "default" 0.0;
+        rel1.relative: 0.0 1.0;
+        rel2.relative: 0.0 1.0;
+        align: 0.0 1.0;
+      }
+      description { state: "link" 0.0;
+        rel1.relative: 0.0 1.0;
+        rel2.relative: 0.0 1.0;
+        align: 0.0 1.0;
+      }
+      description { state: "broken" 0.0;
+        rel1.relative: 0.0 1.0;
+        rel2.relative: 0.0 1.0;
+        align: 0.0 1.0;
+      }
+    }
+    part { name: "vol";
+      description { state: "default" 0.0;
+        rel1.relative: 1.0 1.0;
+        rel2.relative: 1.0 1.0;
+        align: 1.0 1.0;
+      }
+      description { state: "link" 0.0;
+        rel1.relative: 1.0 1.0;
+        rel2.relative: 1.0 1.0;
+        align: 1.0 1.0;
+      }
+      description { state: "broken" 0.0;
+        rel1.relative: 1.0 1.0;
+        rel2.relative: 1.0 1.0;
+        align: 1.0 1.0;
+      }
+    }
+    part { name: "back";
+      description { state: "default" 0.0;
+        visible: 0;
+      }
+      description { state: "selected" 0.0;
+        visible: 0;
+      }
+    }
+    part { name: "back2";
+      insert_after: "textmaster";
+      description { state: "default" 0.0;
+        image.normal: "grad-v-dn.png";
+        rel1.to_y: "labelmin";
+      }
+    }
+    part { name: "e.text.label";
+      description { state: "default" 0.0;
+        text.style: "fileman_icon_name_selected_desktop";
+        text.align: 0.5 1.0;
+        align: 0.5 1.0;
+      }
+      description { state: "selected" 0.0;
+        text.align: 0.5 1.0;
+        align: 0.5 1.0;
+      }
+    }
+    part { name: "base2"; type: RECT; mouse_events: 0;
+      insert_after: "e.text.label";
+      scale: 1;
+      description { state: "default" 0.0;
+        color_class: "/bg/selected/grid/item";
+        visible: 0;
+        rel1.relative: 0.0 1.0;
+        align: 0.5 1.0;
+        min: 0 5;
+      }
+      description { state: "selected" 0.0;
+        inherit: "default" 0.0;
+        visible: 1;
+      }
+    }
+    program { signal: "e,state,selected"; source: "e";
+      action: STATE_SET "selected" 0.0;
+      target: "base2";
+    }
+    program { signal: "e,state,unselected"; source: "e";
+      action: STATE_SET "default" 0.0;
+      target: "base2";
+    }
+  }
+}
+
+group { name: "e/fileman/full-nolabel/icon/fixed";
+  inherit: "e/fileman/full/icon/fixed";
+  alias: "e/fileman/full-nolabel/icon/variable";
+  parts {
+    part { name: "back";
+      description { state: "default" 0.0;
+        visible: 0;
+      }
+      description { state: "selected" 0.0;
+        visible: 0;
+      }
+    }
+    part { name: "back2";
+      description { state: "default" 0.0;
+        visible: 0;
+      }
+    }
+    part { name: "e.text.label";
+      description { state: "default" 0.0;
+        visible: 0;
+      }
+      description { state: "selected" 0.0;
+        visible: 0;
+      }
+    }
+  }
 }
 
 group { name: "e/fileman/default/detail-sizer";
