@@ -1923,22 +1923,19 @@ static void
 _image_flip_horizontal(DATA32 *pixels_out, const DATA32 *pixels_in,
                        int iw, int ih)
 {
-   const unsigned int *pi1, *pi2;
-   unsigned int *po1, *po2;
+   const DATA32 *pi;
+   DATA32 *po;
    int x, y;
 
    for (y = 0; y < ih; y++)
      {
-        pi1 = pixels_in + (y * iw);
-        pi2 = pixels_in + ((y + 1) * iw) - 1;
-        po1 = pixels_out + (y * iw);
-        po2 = pixels_out + ((y + 1) * iw) - 1;
-        for (x = 0; x < (iw >> 1); x++)
+        pi = pixels_in + (y * iw);
+        po = pixels_out + (y * iw) + iw - 1;
+        for (x = 0; x < iw; x++)
           {
-             *po2 = *pi1;
-             *po1 = *pi2;
-             pi1++; po1++;
-             pi2--; po2--;
+             *po = *pi;
+             pi++;
+             po--;
           }
      }
 }
@@ -1947,22 +1944,19 @@ static void
 _image_flip_vertical(DATA32 *pixels_out, const DATA32 *pixels_in,
                      int iw, int ih)
 {
-   const unsigned int *pi1, *pi2;
-   unsigned int *po1, *po2;
+   const DATA32 *pi;
+   DATA32 *po;
    int x, y;
 
-   for (y = 0; y < (ih >> 1); y++)
+   for (y = 0; y < ih; y++)
      {
-        pi1 = pixels_in + (y * iw);
-        pi2 = pixels_in + ((ih - 1 - y) * iw);
-        po1 = pixels_out + (y * iw);
-        po2 = pixels_out + ((ih - 1 - y) * iw);
+        pi = pixels_in + (y * iw);
+        po = pixels_out + ((ih - 1 - y) * iw);
         for (x = 0; x < iw; x++)
           {
-             *po2 = *pi1;
-             *po1 = *pi2;
-             pi1++; po1++;
-             pi2++; po2++;
+             *po = *pi;
+             pi++;
+             po++;
           }
      }
 }
@@ -1971,21 +1965,20 @@ static void
 _image_rotate_180(DATA32 *pixels_out, const DATA32 *pixels_in,
                   int iw, int ih)
 {
-   const unsigned int *pi1, *pi2;
-   unsigned int *po1, *po2;
-   int hw;
+   const DATA32 *pi;
+   DATA32 *po;
+   int x, y;
 
-   hw = iw * ih;
-   pi1 = pixels_in;
-   pi2 = pixels_in + hw - 1;
-   po1 = pixels_out;
-   po2 = pixels_out + hw - 1;
-   for (; pi1 < pi2; )
+   pi = pixels_in;
+   po = pixels_out + (iw * ih) - 1;
+   for (y = 0; y < ih; y++)
      {
-        *po2 = *pi1;
-        *po1 = *pi2;
-        pi1++; po1++;
-        pi2--; po2--;
+        for (x = 0; x < iw; x++)
+          {
+            *po = *pi;
+            pi++;
+            po--;
+          }
      }
 }
 
@@ -2004,16 +1997,16 @@ _image_rotate_90(DATA32 *pixels_out, const DATA32 *pixels_in, int iw, int ih)
              if (xx2 > iw) xx2 = iw;
              for (yy = y; yy < yy2; yy++)
                {
-                  const unsigned int *src;
-                  unsigned int *dst;
+                  const DATA32 *pi;
+                  DATA32 *po;
 
-                  src = pixels_in + (yy * iw) + x;
-                  dst = pixels_out + (x * ih) + (ih - yy - 1);
+                  pi = pixels_in + (yy * iw) + x;
+                  po = pixels_out + (x * ih) + (ih - yy - 1);
                   for (xx = x; xx < xx2; xx++)
                     {
-                       *dst = *src;
-                       src++;
-                       dst += ih;
+                       *po = *pi;
+                       pi++;
+                       po += ih;
                     }
                }
           }
@@ -2035,16 +2028,16 @@ _image_rotate_270(DATA32 *pixels_out, const DATA32 *pixels_in, int iw, int ih)
              if (xx2 > iw) xx2 = iw;
              for (yy = y; yy < yy2; yy++)
                {
-                  const unsigned int *src;
-                  unsigned int *dst;
+                  const DATA32 *pi;
+                  DATA32 *po;
 
-                  src = pixels_in + (yy * iw) + x;
-                  dst = pixels_out + ((iw - x - 1) * ih) + yy;
+                  pi = pixels_in + (yy * iw) + x;
+                  po = pixels_out + ((iw - x - 1) * ih) + yy;
                   for (xx = x; xx < xx2; xx++)
                     {
-                       *dst = *src;
-                       src++;
-                       dst -= ih;
+                       *po = *pi;
+                       pi++;
+                       po -= ih;
                     }
                }
           }
@@ -2055,21 +2048,20 @@ static void
 _image_flip_transpose(DATA32 *pixels_out, const DATA32 *pixels_in,
                       int iw, int ih)
 {
+  // XXX: not very efficient - should tile this too but... not common
+   const DATA32 *pi;
+   DATA32 *po;
    int x, y;
-   const unsigned int *src;
 
-   src = pixels_in;
+   pi = pixels_in;
    for (y = 0; y < ih; y++)
      {
-        unsigned int *dst;
-
-        dst = pixels_out + y;
+        po = pixels_out + y;
         for (x = 0; x < iw; x++)
           {
-             unsigned int tmp = *src;
-             *dst = tmp;
-             src++;
-             dst += ih;
+             *po = *pi;
+             pi++;
+             po += ih;
           }
      }
 }
@@ -2078,20 +2070,20 @@ static void
 _image_flip_transverse(DATA32 *pixels_out, const DATA32 *pixels_in,
                        int iw, int ih)
 {
+  // XXX: not very efficient - should tile this too but... not common
+   const DATA32 *pi;
+   DATA32 *po;
    int x, y;
-   const unsigned int *src;
 
-   src = pixels_in + (iw * ih) - 1;
+   pi = pixels_in + (iw * ih) - 1;
    for (y = 0; y < ih; y++)
      {
-        unsigned int *dst;
-
-        dst = pixels_out + y;
+        po = pixels_out + y;
         for (x = 0; x < iw; x++)
           {
-             *dst = *src;
-             src--;
-             dst += ih;
+             *po = *pi;
+             pi--;
+             po += ih;
           }
      }
 }
