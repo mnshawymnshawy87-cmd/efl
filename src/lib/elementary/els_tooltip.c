@@ -583,7 +583,12 @@ _elm_tooltip_reconfigure(Elm_Tooltip *tt)
      }
    else
      {
-        evas_output_size_get(tt->evas, &cw, &ch);
+        Evas_Coord fx, fy, fw, fh;
+
+        evas_output_viewport_get(tt->evas, NULL, NULL, &cw, &ch);
+        evas_output_framespace_get(tt->evas, &fx, &fy, &fw, &fh);
+        cw -= fw;
+        ch -= fh;
         evas_pointer_canvas_xy_get(tt->evas, &px, &py);
      }
    TTDBG("SCREEN:  cw=%d,ch=%d\n", cw, ch);
