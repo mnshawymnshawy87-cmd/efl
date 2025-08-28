@@ -336,7 +336,7 @@ group { name: "elm/border/base/default";
             rel.to: "elm.event.close";
             min: 15 15; max: 15 15;
             fixed: 1 1;
-            color_class: "/fg/noemal/titlebar/close";
+            color_class: "/fg/normal/titlebar/close";
          }
          desc { "selected";
             inherit: "default";
@@ -351,7 +351,7 @@ group { name: "elm/border/base/default";
             rel.to: "elm.event.maximize";
             min: 15 15; max: 15 15;
             fixed: 1 1;
-            color_class: "/fg/noemal/titlebar/maximize";
+            color_class: "/fg/normal/titlebar/maximize";
          }
          desc { "selected";
             inherit: "default";
