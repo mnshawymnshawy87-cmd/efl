@@ -988,6 +988,7 @@ _palette_unset(Elm_Palette *pal, const char *clas)
              pal->colors = eina_list_remove_list(pal->colors, l);
              if (c->name) eina_stringshare_del(c->name);
              free(c);
+             return;
           }
      }
 }
