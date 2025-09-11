@@ -1007,11 +1007,12 @@ efreet_desktop_generic_fields_parse(Efreet_Desktop *desktop, Efreet_Ini *ini)
     if (!val) val = efreet_ini_localestring_get(ini, "_Name");
 #endif
     if (val) desktop->name = strdup(val);
-    else
-    {
-        ERR("no Name or _Name fields in file '%s'", desktop->orig_path);
-        return 0;
-    }
+// Be lenient - we are using efreet for random efm extra files too
+//    else
+//    {
+//        ERR("no Name or _Name fields in file '%s'", desktop->orig_path);
+//        return 0;
+//    }
 
     val = efreet_ini_localestring_get(ini, "GenericName");
     if (val) desktop->generic_name = strdup(val);
