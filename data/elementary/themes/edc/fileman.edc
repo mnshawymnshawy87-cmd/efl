@@ -73,6 +73,23 @@ group { name: "e/fileman/default/list/variable";
             fixed: 1 1;
          }
       }
+      part { name: "e.swallow.icon_over"; type: SWALLOW; mouse_events: 0;
+         clip_to: "icon";
+         description { state: "default" 0.0;
+            rel.to: "icon0";
+            rel1.relative: 0.20 0.20;
+            rel2.relative: 0.80 0.80;
+            fixed: 1 1;
+         }
+      }
+      part { name: "e.swallow.icon_badge"; type: SWALLOW; mouse_events: 0;
+         clip_to: "icon";
+         description { state: "default" 0.0;
+            rel.to: "icon0";
+            rel1.relative: 0.667 0.667;
+            fixed: 1 1;
+         }
+      }
       part { name: "e.text.label"; type: TEXT; mouse_events: 0;
          scale: 1;
          description { state: "default" 0.0;
@@ -1464,6 +1481,23 @@ group { name: "e/fileman/default/icon/fixed";
             rel.to: "icon0";
          }
       }
+      part { name: "e.swallow.icon_over"; type: SWALLOW; mouse_events: 0;
+         clip_to: "icon";
+         description { state: "default" 0.0;
+            rel.to: "icon0";
+            rel1.relative: 0.20 0.20;
+            rel2.relative: 0.80 0.80;
+            fixed: 1 1;
+         }
+      }
+      part { name: "e.swallow.icon_badge"; type: SWALLOW; mouse_events: 0;
+         clip_to: "icon";
+         description { state: "default" 0.0;
+            rel.to: "icon0";
+            rel1.relative: 0.667 0.667;
+            fixed: 1 1;
+         }
+      }
       part { name: "textmaster"; type: RECT;
          description { state: "default" 0.0;
          }
@@ -2594,6 +2628,76 @@ group { name: "e/fileman/default/list/drop_between";
       program { signal: "e,state,unselected"; source: "e";
          action: STATE_SET "default" 0.0;
          target: "base";
+      }
+   }
+}
+
+group { name: "e/fileman/default/icon/resizer";
+   images.image: "outline.png" COMP;
+   images.image: "diagonal_stripes.png" COMP;
+   parts {
+      part { name: "pat"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel.to: "base";
+            rel1.offset: 1 1;
+            rel2.offset: -2 -2;
+            image.normal: "diagonal_stripes.png";
+            color_class: "/bg/normal/fileman/selection/base";
+            TILED_PATTERN(240, 240)
+         }
+      }
+      part { name: "base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "outline.png";
+            image.border: 4 4 4 4;
+            image.middle: 0;
+            fill.smooth: 0;
+            color_class: "/bg/normal/fileman/selection/outline";
+         }
+      }
+      part { name: "left"; type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel.to: "base";
+            rel2.relative: 0.0 1.0;
+            rel1.offset: -4 -4;
+            rel2.offset: 3 3;
+            color: 0 0 0 0;
+            offscale;
+         }
+      }
+      part { name: "right"; type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel.to: "base";
+            rel1.relative: 1.0 0.0;
+            rel1.offset: -4 -4;
+            rel2.offset: 3 3;
+            color: 0 0 0 0;
+            offscale;
+         }
+      }
+      part { name: "top"; type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel.to: "base";
+            rel2.relative: 1.0 0.0;
+            rel1.offset: -4 -4;
+            rel2.offset: 3 3;
+            color: 0 0 0 0;
+            offscale;
+         }
+      }
+      part { name: "bottom"; type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel.to: "base";
+            rel1.relative: 0.0 1.0;
+            rel1.offset: -4 -4;
+            rel2.offset: 3 3;
+            color: 0 0 0 0;
+            offscale;
+         }
       }
    }
 }
