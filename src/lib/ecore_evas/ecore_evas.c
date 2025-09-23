@@ -500,7 +500,7 @@ ecore_evas_engine_type_supported_get(Ecore_Evas_Engine_Type engine)
 #else
         return EINA_FALSE;
 #endif
-      case ECORE_EVAS_ENGINE_XRENDER_X11:
+      case ECORE_EVAS_ENGINE_XRENDER_X11: /* @deprecated */
         return EINA_FALSE;
       case ECORE_EVAS_ENGINE_OPENGL_X11:
 #ifdef BUILD_ECORE_EVAS_OPENGL_X11
@@ -542,7 +542,7 @@ ecore_evas_engine_type_supported_get(Ecore_Evas_Engine_Type engine)
 #else
         return EINA_FALSE;
 #endif
-      case ECORE_EVAS_ENGINE_DIRECTFB:
+      case ECORE_EVAS_ENGINE_DIRECTFB: /* @deprecated */
         return EINA_FALSE;
       case ECORE_EVAS_ENGINE_SOFTWARE_FB:
 #ifdef BUILD_ECORE_EVAS_FB
@@ -551,17 +551,17 @@ ecore_evas_engine_type_supported_get(Ecore_Evas_Engine_Type engine)
         return EINA_FALSE;
 #endif
 
-      case ECORE_EVAS_ENGINE_SOFTWARE_8_X11:
+      case ECORE_EVAS_ENGINE_SOFTWARE_8_X11: /* @deprecated */
         return EINA_FALSE;
-      case ECORE_EVAS_ENGINE_SOFTWARE_16_X11:
+      case ECORE_EVAS_ENGINE_SOFTWARE_16_X11: /* @deprecated */
         return EINA_FALSE;
-      case ECORE_EVAS_ENGINE_SOFTWARE_16_DDRAW:
+      case ECORE_EVAS_ENGINE_SOFTWARE_16_DDRAW: /* @deprecated */
         return EINA_FALSE;
-      case ECORE_EVAS_ENGINE_SOFTWARE_16_WINCE:
+      case ECORE_EVAS_ENGINE_SOFTWARE_16_WINCE: /* @deprecated */
         return EINA_FALSE;
-      case ECORE_EVAS_ENGINE_DIRECT3D:
+      case ECORE_EVAS_ENGINE_DIRECT3D: /* @deprecated */
         return EINA_FALSE;
-      case ECORE_EVAS_ENGINE_OPENGL_GLEW:
+      case ECORE_EVAS_ENGINE_OPENGL_GLEW: /* @deprecated */
         return EINA_FALSE;
 
       case ECORE_EVAS_ENGINE_OPENGL_COCOA:
