@@ -981,13 +981,6 @@ _ecore_evas_constructor_direct3d(int x, int y, int w, int h,
 }
 
 static Ecore_Evas *
-_ecore_evas_constructor_opengl_glew(int x, int y, int w, int h,
-				    const char *extra_options EINA_UNUSED)
-{
-   return ecore_evas_gl_glew_new(NULL, x, y, w, h);
-}
-
-static Ecore_Evas *
 _ecore_evas_constructor_buffer(int x EINA_UNUSED, int y EINA_UNUSED, int w, int h, const char *extra_options EINA_UNUSED)
 {
    return ecore_evas_buffer_new(w, h);
@@ -1003,7 +996,6 @@ static const struct ecore_evas_engine _engines[] = {
   {"opengl_win32", _ecore_evas_constructor_opengl_win32},
   {"software_ddraw", _ecore_evas_constructor_software_ddraw},
   {"direct3d", _ecore_evas_constructor_direct3d},
-  {"opengl_glew", _ecore_evas_constructor_opengl_glew},
   {"opengl_cocoa", _ecore_evas_constructor_cocoa},
   {"psl1ght", _ecore_evas_constructor_psl1ght},
   {"wayland_shm", _ecore_evas_constructor_wayland_shm},

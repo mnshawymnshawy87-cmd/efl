@@ -1967,7 +1967,7 @@ EAPI Ecore_Evas *ecore_evas_gl_glew_new(Ecore_Win32_Window *parent,
                                         int                 x,
                                         int                 y,
                                         int                 width,
-                                        int                 height);
+                                        int                 height) EINA_DEPRECATED;
 
 EAPI Ecore_Win32_Window *ecore_evas_win32_window_get(const Ecore_Evas *ee);
 
