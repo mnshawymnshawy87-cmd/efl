@@ -208,3 +208,9 @@ EAPI void
 ecore_evas_xrender_x11_extra_event_window_add(Ecore_Evas *ee EINA_UNUSED, Ecore_X_Window win EINA_UNUSED)
 {
 }
+
+EAPI Ecore_Evas *
+ecore_evas_psl1ght_new(const char* name EINA_UNUSED, int w EINA_UNUSED, int h EINA_UNUSED)
+{
+   return NULL;
+}

@@ -99,7 +99,6 @@ extern "C" {
 #define HAVE_ECORE_EVAS_SDL 1
 //#define HAVE_ECORE_EVAS_WINCE 1 /* @deprecated */
 //#define HAVE_ECORE_EVAS_EWS 1 /* @deprecated */
-#define HAVE_ECORE_EVAS_PSL1GHT 1
 #define HAVE_ECORE_EVAS_WAYLAND_SHM 1
 #define HAVE_ECORE_EVAS_WAYLAND_EGL 1
 #define HAVE_ECORE_EVAS_DRM 1
@@ -127,7 +126,7 @@ typedef enum _Ecore_Evas_Engine_Type
    ECORE_EVAS_ENGINE_SOFTWARE_16_WINCE, /* @deprecated */
    ECORE_EVAS_ENGINE_OPENGL_SDL,
    ECORE_EVAS_ENGINE_EWS, /* @deprecated */
-   ECORE_EVAS_ENGINE_PSL1GHT,
+   ECORE_EVAS_ENGINE_PSL1GHT, /* @deprecated */
    ECORE_EVAS_ENGINE_WAYLAND_SHM,
    ECORE_EVAS_ENGINE_WAYLAND_EGL,
    ECORE_EVAS_ENGINE_DRM,
@@ -2052,16 +2051,6 @@ EAPI Ecore_Evas *ecore_evas_cocoa_new(Ecore_Cocoa_Window *parent,
                                       int w,
                                       int h);
 
-/**
- * @brief Creates a new @c Ecore_Evas canvas bound to the Evas
- * @b psl1ght engine.
- *
- * @param name Deprecated.
- * @param w Width of the canvas, in pixels.
- * @param h Height of the canvas, in pixels.
- *
- * The psl1ght backend is used for the PS3 GameOS.
- */
 EAPI Ecore_Evas *ecore_evas_psl1ght_new(const char* name, int w, int h) EINA_DEPRECATED;
 
 

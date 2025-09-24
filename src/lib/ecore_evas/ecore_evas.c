@@ -572,7 +572,7 @@ ecore_evas_engine_type_supported_get(Ecore_Evas_Engine_Type engine)
 #endif
       case ECORE_EVAS_ENGINE_EWS:
         return EINA_FALSE;
-     case ECORE_EVAS_ENGINE_PSL1GHT:
+     case ECORE_EVAS_ENGINE_PSL1GHT: /* @deprecated */
         return EINA_FALSE;
      case ECORE_EVAS_ENGINE_WAYLAND_SHM:
 #ifdef BUILD_ECORE_EVAS_WAYLAND_SHM
@@ -885,12 +885,6 @@ _ecore_evas_constructor_fb(int x EINA_UNUSED, int y EINA_UNUSED, int w, int h, c
 }
 
 static Ecore_Evas *
-_ecore_evas_constructor_psl1ght(int x EINA_UNUSED, int y EINA_UNUSED, int w EINA_UNUSED, int h EINA_UNUSED, const char *extra_options EINA_UNUSED)
-{
-   return NULL;
-}
-
-static Ecore_Evas *
 _ecore_evas_constructor_wayland_shm(int x, int y, int w, int h, const char *extra_options)
 {
    char *disp_name = NULL;
@@ -997,7 +991,6 @@ static const struct ecore_evas_engine _engines[] = {
   {"software_ddraw", _ecore_evas_constructor_software_ddraw},
   {"direct3d", _ecore_evas_constructor_direct3d},
   {"opengl_cocoa", _ecore_evas_constructor_cocoa},
-  {"psl1ght", _ecore_evas_constructor_psl1ght},
   {"wayland_shm", _ecore_evas_constructor_wayland_shm},
   {"wayland_egl", _ecore_evas_constructor_wayland_egl},
   {"drm", _ecore_evas_constructor_drm},
@@ -4740,26 +4733,6 @@ ecore_evas_cocoa_new(Ecore_Cocoa_Window *parent, int x, int y, int w, int h)
    EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
    ee = new(parent, x, y, w, h);
-   if (!_ecore_evas_cursors_init(ee))
-     {
-        ecore_evas_free(ee);
-        return NULL;
-     }
-   return ee;
-}
-
-EAPI Ecore_Evas *
-ecore_evas_psl1ght_new(const char* name, int w, int h)
-{
-   Ecore_Evas *ee;
-   Ecore_Evas *(*new)(const char*, int, int);
-   Eina_Module *m = _ecore_evas_engine_load("psl1ght");
-   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
-
-   new = eina_module_symbol_get(m, "ecore_evas_psl1ght_new_internal");
-   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
-
-   ee = new(name, w, h);
    if (!_ecore_evas_cursors_init(ee))
      {
         ecore_evas_free(ee);
