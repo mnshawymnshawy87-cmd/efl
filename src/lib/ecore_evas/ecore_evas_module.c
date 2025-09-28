@@ -2,6 +2,9 @@
 # include <config.h>
 #endif
 
+#include <Eina.h>
+#include "eina_private.h"
+
 #include <Ecore.h>
 #include "ecore_private.h"
 
@@ -214,10 +217,7 @@ _ecore_evas_available_engines_get(void)
                {
                   const char *name;
 
-#ifdef _WIN32
-                  name = strrchr(info->path, '\\');
-                  if (name) name++;
-#endif
+                  EINA_PATH_TO_UNIX(info->path);
                   name = strrchr(info->path, '/');
                   if (name) name++;
                   else name = info->path;
@@ -271,9 +271,6 @@ _ecore_evas_available_engines_get(void)
                     {
 #ifdef BUILD_ECORE_EVAS_SOFTWARE_GDI
                        ADDENG("software_gdi");
-#endif
-#ifdef BUILD_ECORE_EVAS_SOFTWARE_DDRAW
-                       ADDENG("software_ddraw");
 #endif
 #ifdef BUILD_ECORE_EVAS_DIRECT3D
                        ADDENG("direct3d");

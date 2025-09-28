@@ -24,9 +24,6 @@
 #ifdef BUILD_ECORE_EVAS_SOFTWARE_GDI
 # include <Evas_Engine_Software_Gdi.h>
 #endif
-#ifdef BUILD_ECORE_EVAS_SOFTWARE_DDRAW
-# include <Evas_Engine_Software_DDraw.h>
-#endif
 #ifdef BUILD_ECORE_EVAS_OPENGL_WIN32
 # include <Evas_Engine_GL_Win32.h>
 #endif
@@ -744,22 +741,6 @@ _ecore_evas_win32_rotation_set(Ecore_Evas *ee, int rotation, int resize EINA_UNU
      }
 #endif /* BUILD_ECORE_EVAS_SOFTWARE_GDI */
 
-#ifdef BUILD_ECORE_EVAS_SOFTWARE_DDRAW
-   if (!strcmp(ee->driver, "software_ddraw"))
-     {
-        Evas_Engine_Info_Software_DDraw *einfo;
-
-        einfo = (Evas_Engine_Info_Software_DDraw *)evas_engine_info_get(ee->evas);
-        if (!einfo) return;
-        einfo->info.rotation = rotation;
-        if (!evas_engine_info_set(ee->evas, (Evas_Engine_Info *)einfo))
-          {
-             ERR("evas_engine_info_set() for engine '%s' failed.", ee->driver);
-          }
-        _ecore_evas_win32_rotation_set_internal(ee, rotation);
-     }
-#endif /* BUILD_ECORE_EVAS_SOFTWARE_DDRAW */
-
 #ifdef BUILD_ECORE_EVAS_OPENGL_WIN32
    if (!strcmp(ee->driver, "opengl_win32"))
      {
@@ -785,7 +766,6 @@ _ecore_evas_win32_shaped_set(Ecore_Evas *ee, int shaped)
      return;
 
    wdata = ee->engine.data;
-   if (!strcmp(ee->driver, "software_ddraw")) return;
 
 #ifdef BUILD_ECORE_EVAS_SOFTWARE_GDI
    if (!strcmp(ee->driver, "software_gdi"))
@@ -1050,24 +1030,6 @@ _ecore_evas_win32_fullscreen_set(Ecore_Evas *ee, Eina_Bool on)
 
    /* Nothing to be done for the GDI backend at the evas level */
    /* Nothing to be done for the OpenGL backend at the evas level */
-
-#ifdef BUILD_ECORE_EVAS_SOFTWRE_DDRAW
-   if (strcmp(ee->driver, "software_ddraw") == 0)
-     {
-        Evas_Engine_Info_Software_DDraw *einfo;
-
-        einfo = (Evas_Engine_Info_Software_DDraw *)evas_engine_info_get(ecore_evas_get(ee));
-        if (einfo)
-          {
-             einfo->info.fullscreen = !!on;
-/*           einfo->info.layered = window->shape.layered; */
-             if (!evas_engine_info_set(ee->evas, (Evas_Engine_Info *)einfo))
-               {
-                  ERR("evas_engine_info_set() for engine '%s' failed.", ee->driver);
-               }
-          }
-     }
-#endif /* BUILD_ECORE_EVAS_SOFTWARE_DDRAW */
 }
 
 static void
@@ -1527,45 +1489,6 @@ _ecore_evas_engine_software_gdi_init(Ecore_Evas *ee)
 }
 #endif /* BUILD_ECORE_EVAS_SOFTWARE_GDI */
 
-#ifdef BUILD_ECORE_EVAS_SOFTWARE_DDRAW
-static int
-_ecore_evas_engine_software_ddraw_init(Ecore_Evas *ee)
-{
-   Evas_Engine_Info_Software_DDraw *einfo;
-   const char                      *driver;
-   int                              rmethod;
-
-   driver = "software_ddraw";
-
-   rmethod = evas_render_method_lookup(driver);
-   if (!rmethod)
-     return 0;
-
-   ee->driver = driver;
-   evas_output_method_set(ee->evas, rmethod);
-
-   einfo = (Evas_Engine_Info_Software_DDraw *)evas_engine_info_get(ee->evas);
-   if (einfo)
-     {
-        /* FIXME: REDRAW_DEBUG missing for now */
-        einfo->info.window = ((Ecore_Win32_Window *)ee->prop.window)->window;
-        einfo->info.rotation = 0;
-        if (!evas_engine_info_set(ee->evas, (Evas_Engine_Info *)einfo))
-          {
-             ERR("evas_engine_info_set() for engine '%s' failed.", ee->driver);
-             return 0;
-          }
-     }
-   else
-     {
-        ERR("evas_engine_info_set() init engine '%s' failed.", ee->driver);
-        return 0;
-     }
-
-   return 1;
-}
-#endif /* BUILD_ECORE_EVAS_SOFTWARE_DDRAW */
-
 #ifdef BUILD_ECORE_EVAS_OPENGL_WIN32
 static int
 _ecore_evas_engine_opengl_win32_init(Ecore_Evas *ee)
@@ -1713,30 +1636,6 @@ ecore_evas_software_gdi_new_internal(Ecore_Win32_Window *parent,
    (void) height;
    return NULL;
 #endif
-}
-
-EMODAPI Ecore_Evas *
-ecore_evas_software_ddraw_new_internal(Ecore_Win32_Window *parent,
-				       int                 x,
-				       int                 y,
-				       int                 width,
-				       int                 height)
-{
-#ifdef BUILD_ECORE_EVAS_SOFTWARE_DDRAW
-   return _ecore_evas_win32_new_internal(_ecore_evas_engine_software_ddraw_init,
-                                         parent,
-                                         x,
-                                         y,
-                                         width,
-                                         height);
-#else
-   (void) parent;
-   (void) x;
-   (void) y;
-   (void) width;
-   (void) height;
-   return NULL;
-#endif /* ! BUILD_ECORE_EVAS_SOFTWARE_DDRAW */
 }
 
 EMODAPI Ecore_Evas *

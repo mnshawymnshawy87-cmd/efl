@@ -518,12 +518,8 @@ ecore_evas_engine_type_supported_get(Ecore_Evas_Engine_Type engine)
 #else
         return EINA_FALSE;
 #endif
-      case ECORE_EVAS_ENGINE_SOFTWARE_DDRAW:
-#ifdef BUILD_ECORE_EVAS_SOFTWARE_DDRAW
-        return EINA_TRUE;
-#else
+      case ECORE_EVAS_ENGINE_SOFTWARE_DDRAW: /* @deprecated */
         return EINA_FALSE;
-#endif
       case ECORE_EVAS_ENGINE_OPENGL_WIN32:
 #ifdef BUILD_ECORE_EVAS_OPENGL_WIN32
         return EINA_TRUE;
@@ -954,13 +950,6 @@ _ecore_evas_constructor_software_gdi(int x, int y, int w, int h,
 }
 
 static Ecore_Evas *
-_ecore_evas_constructor_software_ddraw(int x, int y, int w, int h,
-				       const char *extra_options EINA_UNUSED)
-{
-   return ecore_evas_software_ddraw_new(NULL, x, y, w, h);
-}
-
-static Ecore_Evas *
 _ecore_evas_constructor_opengl_win32(int x, int y, int w, int h,
 				     const char *extra_options EINA_UNUSED)
 {
@@ -988,7 +977,6 @@ static const struct ecore_evas_engine _engines[] = {
   {"fb", _ecore_evas_constructor_fb},
   {"software_gdi", _ecore_evas_constructor_software_gdi},
   {"opengl_win32", _ecore_evas_constructor_opengl_win32},
-  {"software_ddraw", _ecore_evas_constructor_software_ddraw},
   {"direct3d", _ecore_evas_constructor_direct3d},
   {"opengl_cocoa", _ecore_evas_constructor_cocoa},
   {"wayland_shm", _ecore_evas_constructor_wayland_shm},
@@ -4660,30 +4648,6 @@ ecore_evas_software_gdi_new(Ecore_Win32_Window *parent,
      }
    return ee;
 
-}
-
-EAPI Ecore_Evas *
-ecore_evas_software_ddraw_new(Ecore_Win32_Window *parent,
-			      int                 x,
-			      int                 y,
-			      int                 width,
-			      int                 height)
-{
-   Ecore_Evas *ee;
-   Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
-   Eina_Module *m = _ecore_evas_engine_load("win32");
-   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
-
-   new = eina_module_symbol_get(m, "ecore_evas_software_ddraw_new_internal");
-   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
-
-   ee = new(parent, x, y, width, height);
-   if (!_ecore_evas_cursors_init(ee))
-     {
-        ecore_evas_free(ee);
-        return NULL;
-     }
-   return ee;
 }
 
 EAPI Ecore_Evas *

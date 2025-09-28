@@ -214,3 +214,13 @@ ecore_evas_psl1ght_new(const char* name EINA_UNUSED, int w EINA_UNUSED, int h EI
 {
    return NULL;
 }
+
+EAPI Ecore_Evas *
+ecore_evas_software_ddraw_new(Ecore_Win32_Window *parent EINA_UNUSED,
+			      int                 x EINA_UNUSED,
+			      int                 y EINA_UNUSED,
+			      int                 width EINA_UNUSED,
+			      int                 height EINA_UNUSED)
+{
+   return NULL;
+}

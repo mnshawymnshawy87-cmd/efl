@@ -37,8 +37,6 @@
  * rendering using SDL as the buffer)
  * @li "gdi", "software-gdi", "software_gdi" (Windows WIN32 rendering via
  * GDI with software)
- * @li "ddraw", "software-ddraw", "software_ddraw" (Windows WIN32 rendering via
- * DirectDraw with software)
  * @li "gl-win32", "gl_win32", "opengl-win32", "opengl_win32" (OpenGL-ES2
  * rendering in Windows, using Angle)
  * @li "gl-cocoa", "gl_cocoa", "opengl-cocoa", "opengl_cocoa" (OpenGL rendering in Cocoa)

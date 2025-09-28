@@ -3477,8 +3477,7 @@ _elm_ee_win32win_get(const Ecore_Evas *ee)
    engine_name = ecore_evas_engine_name_get(ee);
    if (EINA_UNLIKELY(!engine_name)) return NULL;
 
-   if ((!strcmp(engine_name, ELM_SOFTWARE_WIN32)) ||
-       (!strcmp(engine_name, ELM_SOFTWARE_DDRAW)))
+   if (!strcmp(engine_name, ELM_SOFTWARE_WIN32))
      {
         return ecore_evas_win32_window_get(ee);
      }
@@ -5326,7 +5325,6 @@ _elm_win_finalize_internal(Eo *obj, Efl_Ui_Win_Data *sd, const char *name, Efl_U
           {
              enginelist[p++] = ELM_SOFTWARE_WIN32;
              enginelist[p++] = ELM_OPENGL_WIN32;
-             enginelist[p++] = ELM_SOFTWARE_DDRAW;
           }
 #endif
 
@@ -5438,7 +5436,6 @@ _elm_win_finalize_internal(Eo *obj, Efl_Ui_Win_Data *sd, const char *name, Efl_U
 #ifdef HAVE_ELEMENTARY_WIN32
                   enginelist[p++] = ELM_SOFTWARE_WIN32;
                   enginelist[p++] = ELM_OPENGL_WIN32;
-                  enginelist[p++] = ELM_SOFTWARE_DDRAW;
 #endif
 #ifdef HAVE_ELEMENTARY_SDL
                   enginelist[p++] = ELM_SOFTWARE_SDL;
@@ -5474,7 +5471,6 @@ _elm_win_finalize_internal(Eo *obj, Efl_Ui_Win_Data *sd, const char *name, Efl_U
 #ifdef HAVE_ELEMENTARY_WIN32
                   enginelist[p++] = ELM_SOFTWARE_WIN32;
                   enginelist[p++] = ELM_OPENGL_WIN32;
-                  enginelist[p++] = ELM_SOFTWARE_DDRAW;
 #endif
 #ifdef HAVE_ELEMENTARY_SDL
                   enginelist[p++] = ELM_SOFTWARE_SDL;
@@ -5538,8 +5534,6 @@ _elm_win_finalize_internal(Eo *obj, Efl_Ui_Win_Data *sd, const char *name, Efl_U
                tmp_sd.ee = ecore_evas_software_gdi_new(NULL, 0, 0, 1, 1);
              else if (!strcmp(enginelist[i], ELM_OPENGL_WIN32))
                tmp_sd.ee = ecore_evas_gl_win32_new(NULL, 1, 1, 0, 0);
-             else if (!strcmp(enginelist[i], ELM_SOFTWARE_DDRAW))
-               tmp_sd.ee = ecore_evas_software_ddraw_new(NULL, 0, 0, 1, 1);
              else if (!strcmp(enginelist[i], ELM_SOFTWARE_SDL))
                tmp_sd.ee = ecore_evas_sdl_new(NULL, 0, 0, 0, 0, 0, 1);
              else if (!strcmp(enginelist[i], ELM_OPENGL_SDL))
@@ -8026,8 +8020,7 @@ elm_win_win32_window_get(const Evas_Object *obj)
    if (!sd) return NULL;
    engine_name = ecore_evas_engine_name_get(sd->ee);
    if (!(engine_name &&
-         ((!strcmp(engine_name, ELM_SOFTWARE_WIN32)) ||
-          (!strcmp(engine_name, ELM_SOFTWARE_DDRAW)))))
+         !strcmp(engine_name, ELM_SOFTWARE_WIN32)))
      return NULL;
 
    if (!evas_object_smart_type_check_ptr(obj, MY_CLASS_NAME_LEGACY))

@@ -4,7 +4,6 @@ engines = [
 
 if sys_windows
   engines += [
-    ['software_ddraw', []],
     ['software_gdi', []],
   ]
   if get_option('opengl') == 'es-egl'

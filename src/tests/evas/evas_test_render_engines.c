@@ -32,9 +32,6 @@ static const char *built_engines[] = {
 #ifdef BUILD_ENGINE_GL_X11
   "gl_x11",
 #endif
-#ifdef BUILD_ENGINE_SOFTWARE_DDRAW
-  "software_ddraw",
-#endif
 #ifdef BUILD_ENGINE_SOFTWARE_GDI
   "software_gdi",
 #endif

@@ -113,7 +113,7 @@ typedef enum _Ecore_Evas_Engine_Type
    ECORE_EVAS_ENGINE_SOFTWARE_XCB, /* @deprecated */
    ECORE_EVAS_ENGINE_XRENDER_XCB, /* @deprecated */
    ECORE_EVAS_ENGINE_SOFTWARE_GDI,
-   ECORE_EVAS_ENGINE_SOFTWARE_DDRAW,
+   ECORE_EVAS_ENGINE_SOFTWARE_DDRAW, /* @deprecated */
    ECORE_EVAS_ENGINE_DIRECT3D, /* @deprecated */
    ECORE_EVAS_ENGINE_OPENGL_GLEW, /* @deprecated */
    ECORE_EVAS_ENGINE_OPENGL_COCOA,
@@ -1911,26 +1911,11 @@ EAPI Ecore_Evas     *ecore_evas_software_gdi_new(Ecore_Win32_Window *parent,
                                                  int                 width,
                                                  int                 height);
 
-/**
- * @brief Creates a new @c Ecore_Evas canvas bound to the Evas
- * @b DirectDraw (software) engine.
- *
- * @param parent ID of the parent window this Ecore_Evas window belongs
- *        to, or 0 if this is a top-level window.
- * @param x Horizontal position of window, in pixels
- * @param y Vertical position of window, in pixels
- * @param width The width of the canvas, in pixels
- * @param height The height of the canvas, in pixels
- * @return A new @c Ecore_Evas instance or @c NULL on failure
- *
- * DirectDraw is an old Microsoft Win32 API for graphics rendering.
- * This API uses the unaccelerated software-based rendering.
- */
 EAPI Ecore_Evas     *ecore_evas_software_ddraw_new(Ecore_Win32_Window *parent,
                                                    int                 x,
                                                    int                 y,
                                                    int                 width,
-                                                   int                 height);
+                                                   int                 height) EINA_DEPRECATED;
 
 /**
  * @brief Creates Ecore_Evas using Opengl ES On Windows.
@@ -1948,13 +1933,13 @@ EAPI Ecore_Evas     *ecore_evas_gl_win32_new(Ecore_Win32_Window *parent,
                                              int                 x,
                                              int                 y,
                                              int                 width,
-                                             int                 height);
+                                             int                 height) EINA_DEPRECATED;
 
 EAPI Ecore_Evas     *ecore_evas_software_16_ddraw_new(Ecore_Win32_Window *parent,
                                                       int                 x,
                                                       int                 y,
                                                       int                 width,
-                                                      int                 height);
+                                                      int                 height) EINA_DEPRECATED;
 
 EAPI Ecore_Evas     *ecore_evas_direct3d_new(Ecore_Win32_Window *parent,
                                              int                 x,
