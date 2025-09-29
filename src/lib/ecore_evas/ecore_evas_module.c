@@ -217,7 +217,9 @@ _ecore_evas_available_engines_get(void)
                {
                   const char *name;
 
-                  EINA_PATH_TO_UNIX(info->path);
+#ifdef _WIN32
+                  EINA_PATH_TO_UNIX(info->path); // only fdefined on win32
+#endif
                   name = strrchr(info->path, '/');
                   if (name) name++;
                   else name = info->path;

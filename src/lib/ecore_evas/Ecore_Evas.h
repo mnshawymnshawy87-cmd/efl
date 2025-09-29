@@ -1933,7 +1933,7 @@ EAPI Ecore_Evas     *ecore_evas_gl_win32_new(Ecore_Win32_Window *parent,
                                              int                 x,
                                              int                 y,
                                              int                 width,
-                                             int                 height) EINA_DEPRECATED;
+                                             int                 height);
 
 EAPI Ecore_Evas     *ecore_evas_software_16_ddraw_new(Ecore_Win32_Window *parent,
                                                       int                 x,
