@@ -969,10 +969,10 @@ eet_internal_read2(Eet_File *ef)
 
              /* Check string position */
              if (eet_test_close(!((ef->ed->all[j].len > 0)
-                                  && (offset >
+                                  && (offset >=
                                       (bytes_dictionary_entries +
                                        bytes_directory_entries))
-                                  && (offset + ef->ed->all[j].len <
+                                  && (offset + ef->ed->all[j].len <=
                                       ef->data_size)), ef))
                return NULL;
 
