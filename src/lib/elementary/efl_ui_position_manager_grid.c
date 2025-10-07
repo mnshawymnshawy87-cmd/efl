@@ -57,7 +57,7 @@ static void
 _group_cache_require(Eo *obj EINA_UNUSED, Efl_Ui_Position_Manager_Grid_Data *pd)
 {
    unsigned int i;
-   const int len = 100;
+   const unsigned int len = 100;
    Efl_Ui_Position_Manager_Size_Batch_Entity size_buffer[len];
    Efl_Ui_Position_Manager_Size_Batch_Result size_result;
    Group_Cache_Line line = { 0 };
@@ -257,7 +257,7 @@ _position_items_vertical(Eo *obj EINA_UNUSED, Efl_Ui_Position_Manager_Grid_Data 
 {
    Eina_Position2D start = pd->viewport.pos;
    unsigned int i;
-   const int len = 100;
+   const unsigned int len = 100;
    int columns, last_block_start = ctx->new.start_id;
    Efl_Ui_Position_Manager_Size_Batch_Entity size_buffer[len];
    Efl_Ui_Position_Manager_Size_Batch_Result size_result;
@@ -324,7 +324,7 @@ _position_items_horizontal(Eo *obj EINA_UNUSED, Efl_Ui_Position_Manager_Grid_Dat
 {
    Eina_Position2D start = pd->viewport.pos;
    unsigned int i;
-   const int len = 100;
+   const unsigned int len = 100;
    int columns, last_block_start = ctx->new.start_id;
    Efl_Ui_Position_Manager_Size_Batch_Entity size_buffer[len];
    Efl_Ui_Position_Manager_Size_Batch_Result size_result;
@@ -626,7 +626,7 @@ _efl_ui_position_manager_grid_efl_ui_position_manager_entity_item_removed(Eo *ob
 EOLIAN static void
 _efl_ui_position_manager_grid_efl_ui_position_manager_entity_item_size_changed(Eo *obj, Efl_Ui_Position_Manager_Grid_Data *pd, int start_id, int end_id)
 {
-   const int len = 50;
+   const unsigned int len = 50;
    Efl_Ui_Position_Manager_Size_Batch_Entity size_buffer[len];
    Efl_Ui_Position_Manager_Size_Batch_Result size_result;
 
