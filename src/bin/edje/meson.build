@@ -93,7 +93,6 @@ edje_codegen = executable('edje_codegen',
 
 if meson.is_cross_build()
   _edje_codegen = find_program('edje_codegen', native: true)
-  edje_codegen_path = _edje_codegen.path()
   edje_codegen_exe = [_edje_codegen]
 else
   edje_codegen_exe = [env, asan_option, 'EFL_RUN_IN_TREE=1', edje_codegen]
