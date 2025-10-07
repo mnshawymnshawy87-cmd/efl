@@ -38,7 +38,6 @@ endif
 
 if meson.is_cross_build()
   _edje_cc = find_program('edje_cc', native: true)
-  edje_cc_path = _edje_cc.path()
   edje_cc_exe = [_edje_cc]
   edje_depends = []
 else
