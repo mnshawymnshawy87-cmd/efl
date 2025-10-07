@@ -55,7 +55,7 @@ static void
 cache_require(Eo *obj EINA_UNUSED, Efl_Ui_Position_Manager_List_Data *pd)
 {
    unsigned int i;
-   const int len = 100;
+   const unsigned int len = 100;
    Efl_Ui_Position_Manager_Size_Batch_Entity size_buffer[len];
    Efl_Ui_Position_Manager_Size_Batch_Result size_result;
 
@@ -186,7 +186,7 @@ _position_items(Eo *obj EINA_UNUSED, Efl_Ui_Position_Manager_List_Data *pd, Vis_
    Efl_Gfx_Entity *first_group = NULL, *first_fully_visual_group = NULL;
    Eina_Size2D first_group_size;
    Eina_Rect geom;
-   const int len = 100;
+   const unsigned int len = 100;
    Efl_Ui_Position_Manager_Size_Batch_Entity size_buffer[len];
    Efl_Ui_Position_Manager_Size_Batch_Result size_result;
    Efl_Ui_Position_Manager_Object_Batch_Entity obj_buffer[len];
