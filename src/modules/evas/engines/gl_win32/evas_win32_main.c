@@ -197,7 +197,7 @@ eng_window_new(Evas_Engine_Info_GL_Win32 *info,
 
    {
       EGLConfig configs[200];
-      int config_attrs[40], i, num, idx;
+      int config_attrs[40], i, num;
       int alpha;
       int depth_bits;
       int stencil_bits;
