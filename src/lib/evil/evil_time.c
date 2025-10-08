@@ -105,20 +105,9 @@ static const char *am_pm[2] =
    "AM", "PM"
 };
 
-static char gmt[] = { "GMT" };
-
 #ifdef TM_ZONE
 static char utc[] = { "UTC" };
 #endif
-
-/* RFC-822/RFC-2822 */
-static const char * const nast[5] = {
-   "EST",    "CST",    "MST",    "PST",    "\0\0\0"
-};
-
-static const char * const nadt[5] = {
-   "EDT",    "CDT",    "MDT",    "PDT",    "\0\0\0"
-};
 
 static const unsigned char *
 find_string(const unsigned char *bp, int *tgt,
@@ -177,8 +166,8 @@ EVIL_API char *
 strptime(const char *buf, const char *fmt, struct tm *tm)
 {
    unsigned char c;
-   const unsigned char *bp, *ep;
-   int alt_format, i, split_year = 0, neg = 0, offs;
+   const unsigned char *bp;
+   int alt_format, i, split_year = 0;
    const char *new_fmt;
 
    bp = (const unsigned char *)buf;
@@ -452,173 +441,6 @@ strptime(const char *buf, const char *fmt, struct tm *tm)
                    i = i + 1900 - TM_YEAR_BASE;
               }
               tm->tm_year = i;
-              continue;
-
-           case 'Z':
-              tzset();
-              if (strncmp((const char *)bp, gmt, 3) == 0) {
-                 tm->tm_isdst = 0;
-#ifdef TM_GMTOFF
-                 tm->TM_GMTOFF = 0;
-#endif
-#ifdef TM_ZONE
-                 tm->TM_ZONE = gmt;
-#endif
-                 bp += 3;
-              }
-              else
-                {
-                   ep = find_string(bp, &i,
-                                    (const char * const *)tzname,
-                                    NULL, 2);
-                   if (ep != NULL)
-                     {
-                        tm->tm_isdst = i;
-#ifdef TM_GMTOFF
-                        tm->TM_GMTOFF = -(timezone);
-#endif
-#ifdef TM_ZONE
-                        tm->TM_ZONE = tzname[i];
-#endif
-                     }
-                   bp = ep;
-                }
-              continue;
-
-           case 'z':
-              /*
-               * We recognize all ISO 8601 formats:
-               * Z	= Zulu time/UTC
-               * [+-]hhmm
-               * [+-]hh:mm
-               * [+-]hh
-               * We recognize all RFC-822/RFC-2822 formats:
-               * UT|GMT
-               *          North American : UTC offsets
-               * E[DS]T = Eastern : -4 | -5
-               * C[DS]T = Central : -5 | -6
-               * M[DS]T = Mountain: -6 | -7
-               * P[DS]T = Pacific : -7 | -8
-               *          Military
-               * [A-IL-M] = -1 ... -9 (J not used)
-               * [N-Y]  = +1 ... +12
-               */
-              while (isspace(*bp))
-                bp++;
-
-              switch (*bp++)
-                {
-                 case 'G':
-                    if (*bp++ != 'M')
-                      return NULL;
-                    /*FALLTHROUGH*/
-                 case 'U':
-                    if (*bp++ != 'T')
-                      return NULL;
-                    /*FALLTHROUGH*/
-                 case 'Z':
-                    tm->tm_isdst = 0;
-#ifdef TM_GMTOFF
-                    tm->TM_GMTOFF = 0;
-#endif
-#ifdef TM_ZONE
-                    tm->TM_ZONE = utc;
-#endif
-                    continue;
-                 case '+':
-                    neg = 0;
-                    break;
-                 case '-':
-                    neg = 1;
-                    break;
-                 default:
-                    --bp;
-                    ep = find_string(bp, &i, nast, NULL, 4);
-                    if (ep != NULL) {
-#ifdef TM_GMTOFF
-                       tm->TM_GMTOFF = -5 - i;
-#endif
-#ifdef TM_ZONE
-                       tm->TM_ZONE = __UNCONST(nast[i]);
-#endif
-                       bp = ep;
-                       continue;
-                    }
-                    ep = find_string(bp, &i, nadt, NULL, 4);
-                    if (ep != NULL)
-                      {
-                         tm->tm_isdst = 1;
-#ifdef TM_GMTOFF
-                         tm->TM_GMTOFF = -4 - i;
-#endif
-#ifdef TM_ZONE
-                         tm->TM_ZONE = __UNCONST(nadt[i]);
-#endif
-                         bp = ep;
-                         continue;
-                      }
-
-                    if ((*bp >= 'A' && *bp <= 'I') ||
-                        (*bp >= 'L' && *bp <= 'Y'))
-                      {
-#ifdef TM_GMTOFF
-                         /* Argh! No 'J'! */
-                         if (*bp >= 'A' && *bp <= 'I')
-                           tm->TM_GMTOFF =
-                             ('A' - 1) - (int)*bp;
-                         else if (*bp >= 'L' && *bp <= 'M')
-                           tm->TM_GMTOFF = 'A' - (int)*bp;
-                         else if (*bp >= 'N' && *bp <= 'Y')
-                           tm->TM_GMTOFF = (int)*bp - 'M';
-#endif
-#ifdef TM_ZONE
-                         tm->TM_ZONE = NULL; /* XXX */
-#endif
-                         bp++;
-                         continue;
-                      }
-                    return NULL;
-                }
-              offs = 0;
-              for (i = 0; i < 4; )
-                {
-                   if (isdigit(*bp))
-                     {
-                        offs = offs * 10 + (*bp++ - '0');
-                        i++;
-                        continue;
-                     }
-                   if (i == 2 && *bp == ':')
-                     {
-                        bp++;
-                        continue;
-                     }
-                   break;
-                }
-              switch (i)
-                {
-                 case 2:
-                    offs *= 100;
-                    break;
-                 case 4:
-                    i = offs % 100;
-                    if (i >= 60)
-                      return NULL;
-                    /* Convert minutes into decimal */
-                    offs = (offs / 100) * 100 + (i * 50) / 30;
-                    break;
-                 default:
-                    return NULL;
-                }
-              if (neg)
-                offs = -offs;
-              tm->tm_isdst = 0;	/* XXX */
-#ifdef TM_GMTOFF
-              tm->TM_GMTOFF = offs;
-#endif
-#ifdef TM_ZONE
-              tm->TM_ZONE = NULL;	/* XXX */
-#endif
               continue;
 
               /*
