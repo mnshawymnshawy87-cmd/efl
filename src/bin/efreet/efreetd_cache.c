@@ -513,6 +513,10 @@ icon_changes_monitor_add(const struct stat *st, const char *path)
           }
      }
    free(realp);
+
+#ifdef _WIN32
+   (void)st;
+#endif
 }
 
 static void
@@ -541,6 +545,10 @@ desktop_changes_monitor_add(const struct stat *st, const char *path)
           }
      }
    free(realp);
+
+#ifdef _WIN32
+   (void)st;
+#endif
 }
 
 static int
