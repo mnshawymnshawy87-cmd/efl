@@ -62,7 +62,6 @@ dir_lib       = join_paths(dir_prefix, get_option('libdir'))
 
 #local paths
 local_lib = join_paths('src', 'lib')
-local_bindings = join_paths('src', 'bindings')
 local_bin = join_paths('src', 'bin')
 local_module = join_paths('src', 'modules')
 local_tests = join_paths('src', 'tests')
