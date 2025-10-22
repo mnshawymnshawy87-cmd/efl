@@ -38,15 +38,13 @@ endif
 
 if (get_option('libmount'))
   libmount = dependency('mount')
-  eeze_ext_deps += [libmount]
- if libmount.version() == '2.19'
-    eeze_src +=   files('eeze_disk_libmount.c')
-  elif libmount.version() < '2.19'
-    eeze_src +=   files('eeze_disk_libmount_old.c')
-  elif libmount.version() > '2.19'
+  if libmount.found() and libmount.version().version_compare('>2.19')
     eeze_src +=   files('eeze_disk_libmount_new.c')
+    eeze_ext_deps += [libmount]
+    config_h.set('HAVE_EEZE_MOUNT', '1')
+  else
+    eeze_src +=   files('eeze_disk_dummy.c')
   endif
-  config_h.set('HAVE_EEZE_MOUNT', '1')
 else
   eeze_src +=   files('eeze_disk_dummy.c')
 endif
