@@ -214,7 +214,9 @@ eeze_udev_syspath_set_sysattr(const char *syspath,
                               const char *sysattr,
                               double value)
 {
+   char val[16];
    _udev_device *device;
+   int test;
    Eina_Bool ret = EINA_FALSE;
 
    if (!syspath || !sysattr)
@@ -223,17 +225,10 @@ eeze_udev_syspath_set_sysattr(const char *syspath,
    if (!(device = _new_device(syspath)))
      return EINA_FALSE;
 
-#ifndef OLD_LIBUDEV
-   char val[16];
-   int test;
-
    sprintf(val, "%f", value);
    test = udev_device_set_sysattr_value(device, sysattr, val);
    if (test == 0)
      ret = EINA_TRUE;
-#else
-   (void)value;
-#endif
 
   udev_device_unref(device);
   return ret;
