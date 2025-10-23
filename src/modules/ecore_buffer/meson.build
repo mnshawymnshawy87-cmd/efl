@@ -15,7 +15,7 @@ if libtbm.found() == true
   xcb = dependency('xcb', required: false)
   x11_xcb = dependency('x11_xcb', required: false)
   xcb_sync = dependency('xcb_sync', required: false)
-  xcb_dri3 = dependency('xkb_dri3', required: false)
+  xcb_dri3 = dependency('xcb_dri3', required: false)
   if xshmfence.found() == true and xcb.found() == true and x11_xcb.found() and xcb_sync.found() and xkb_dri3.found()
     subdir('x11_dri3')
   endif
