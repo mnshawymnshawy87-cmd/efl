@@ -198,7 +198,7 @@ _signal_handler(int sig EINA_UNUSED,
       siginfo_t *si EINA_UNUSED, void *foo EINA_UNUSED)
 {
    int i, slot = 0;
-   pthread_t self = pthread_self();
+   Eina_Thread self = (Eina_Thread)pthread_self();
 #if defined(HAVE_CLOCK_GETTIME) && defined(HAVE_SCHED_GETCPU) && defined(__clockid_t_defined)
    clockid_t cid;
 #endif
@@ -246,6 +246,9 @@ found:
 # endif
    clock_gettime(cid, &(_bt_ts[slot]));
    _bt_buf_len[slot] = _eina_debug_unwind_bt(_bt_buf[slot], EINA_MAX_BT);
+#else
+   // I hear musl fails all of these ifdef checks above... hooray!
+#  warning "Unsupported libc (musl maybe?). No  known way to get cpu time used of a thread."
 #endif /* HAVE_CLOCK_GETTIME && HAVE_SCHED_GETCPU */
    // now wake up the monitor to let them know we are done collecting our
    // backtrace info
