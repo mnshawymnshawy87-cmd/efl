@@ -3993,9 +3993,10 @@ _ecore_evas_x_selection_notify(void *udata EINA_UNUSED, int type EINA_UNUSED, vo
         if (eina_streq(ev->target, "TARGETS") || eina_streq(ev->target, "ATOMS"))
           {
              //This will decide for a type, and will sent that via _ecore_x_selection_request
-             EINA_SAFETY_ON_FALSE_RETURN_VAL(!edata->selection_data[selection].later_conversion, EINA_FALSE);
-             EINA_SAFETY_ON_FALSE_RETURN_VAL(!edata->selection_data[selection].requested_type, EINA_FALSE);
-             _search_fitting_type_from_event(ee, edata, selection, ev);
+             if ((!edata->selection_data[selection].later_conversion) ||
+                 (!edata->selection_data[selection].requested_type))
+               _search_fitting_type_from_event(ee, edata, selection, ev);
+             else return EINA_FALSE;
           }
         else
           {

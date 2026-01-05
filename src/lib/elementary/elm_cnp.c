@@ -283,7 +283,7 @@ end:
 static Eina_Value
 _callback_storage_error(Eo *obj EINA_UNUSED, void *data EINA_UNUSED, Eina_Error error)
 {
-   ERR("Content cound not be received because of %s.", eina_error_msg_get(error));
+   WRN("Content cound not be received because of %s.", eina_error_msg_get(error));
    return EINA_VALUE_EMPTY;
 }
 
