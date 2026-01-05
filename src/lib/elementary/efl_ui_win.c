@@ -9276,6 +9276,7 @@ _selection_changed_cb(Ecore_Evas *ee, unsigned int seat, Ecore_Evas_Selection_Bu
       .buffer = _ui_buffer_get(selection),
       .caused_by = eina_array_count(pd->planned_changes) > 0 ? eina_array_data_get(pd->planned_changes, 0) : NULL,
    };
+   Elm_Cnp_Event_Selection_Changed *e;
 
    for (unsigned int i = 0; i < eina_array_count(pd->selection_changed); ++i)
      {
@@ -9286,6 +9287,24 @@ _selection_changed_cb(Ecore_Evas *ee, unsigned int seat, Ecore_Evas_Selection_Bu
 
    if (changed.caused_by)
      eina_array_remove(pd->planned_changes, _remove_object, changed.caused_by);
+
+   // post elm cnp change event... this broke at some point.
+   e = calloc(1, sizeof(Elm_Cnp_Event_Selection_Changed));
+   EINA_SAFETY_ON_NULL_RETURN(e);
+   if (selection == ECORE_EVAS_SELECTION_BUFFER_SELECTION_BUFFER)
+     e->type = ELM_SEL_TYPE_PRIMARY;
+   else if (selection == ECORE_EVAS_SELECTION_BUFFER_COPY_AND_PASTE_BUFFER)
+     e->type = ELM_SEL_TYPE_CLIPBOARD;
+   else if (selection == ECORE_EVAS_SELECTION_BUFFER_DRAG_AND_DROP_BUFFER)
+     e->type = ELM_SEL_TYPE_XDND;
+   else
+     { // other selections? dont handle... there are no others though
+       free(e);
+       return;
+     }
+   e->seat_id = seat;
+   e->exists = !!pd;
+   ecore_event_add(ELM_CNP_EVENT_SELECTION_CHANGED, e, NULL, NULL);
 }
 
 static void
