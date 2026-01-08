@@ -992,6 +992,11 @@ if get_option('wl')
   )
 endif
 
+if get_option('fb')
+  config_h.set('HAVE_ELEMENTARY_FB', '1')
+  elementary_deps += ecore_fb
+endif
+
 if get_option('drm')
   config_h.set('HAVE_ELEMENTARY_DRM', '1')
   elementary_deps += ecore_drm2
