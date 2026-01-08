@@ -612,7 +612,7 @@ ecore_evas_fb_new_internal(const char *disp_name, int rotation, int w, int h)
    ee->prop.fullscreen = EINA_FALSE;
    ee->prop.withdrawn = EINA_TRUE;
    ee->prop.sticky = EINA_FALSE;
-   ee->prop.window = 1;
+   ee->prop.window = (Ecore_Window)ee;
 
    /* init evas here */
    if (!ecore_evas_evas_new(ee, w, h))
