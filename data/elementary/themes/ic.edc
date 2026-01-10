@@ -542,6 +542,8 @@ I160("i-enlightenment", "enlightenment")
 
 I160("i-fingerprint", "fingerprint")
 
+I160("i-clipboard", "clipboard")
+
 ///////////////////////////////////////////////////////////////////////////////
 // misc larger icons
 I160("i-unknown", "unknown")

@@ -1,0 +1,12 @@
+group { name: "e/modules/clipboard/main";
+   min: 16 16;
+   max: 128 128;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "i-clipboard";
+         }
+      }
+   }
+}
+
