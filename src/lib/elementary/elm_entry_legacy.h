@@ -85,3 +85,22 @@ EAPI void               elm_entry_file_get(const Evas_Object *obj, const char **
  * @ingroup Elm_Entry_Group
  */
 EAPI void elm_entry_calc_force(Evas_Object *obj);
+
+/**
+ * Set an intercept function for key down events
+ *
+ * This setsd a function that is called on key down events that returns
+ * EINA_FALSE if the key pressed is uninteresting and should be passed on for
+ * normal processing. If the function thinks the key needs special
+ * handling and it should not be passed onto other handling, then return
+ * EINA_TRUE.
+ *
+ * @ingroup Elm_Entry_Group
+ *
+ * @param[in] obj The entry object
+ * @param[in] func The function to call on each key down event to do the intercepting
+ * @param[in] data Data pointer to pass to the intercept function
+ *
+ * @since 1.30
+ */
+EAPI void               elm_entry_key_down_intercept_set(Evas_Object *obj, Eina_Bool (*func) (void *data, Evas_Object *obj, Evas_Event_Key_Down *ev), void *data);

@@ -2020,12 +2020,27 @@ _key_down_cb(void *data,
                Evas_Object *obj EINA_UNUSED,
                void *event_info)
 {
+   ELM_ENTRY_DATA_GET(data, sd);
    Evas_Event_Key_Down *ev = event_info;
    /* First check if context menu disabled is false or not, and
     * then check for key id */
    if ((!_elm_config->context_menu_disabled) && !strcmp(ev->key, "Menu"))
      _menu_call(data);
+   if (sd->intercept.func)
+     {
+        if (sd->intercept.func(sd->intercept.data, data, ev))
+           ev->event_flags |= EVAS_EVENT_FLAG_ON_HOLD;
+     }
 }
+
+EAPI void
+elm_entry_key_down_intercept_set(Evas_Object *obj, Eina_Bool (*func) (void *data, Evas_Object *obj, Evas_Event_Key_Down *ev), void *data)
+{
+  ELM_ENTRY_DATA_GET_OR_RETURN(obj, sd);
+  sd->intercept.data = data;
+  sd->intercept.func = func;
+}
+
 
 static void
 _mouse_down_cb(void *data,
@@ -3893,8 +3908,8 @@ _elm_entry_efl_canvas_group_group_add(Eo *obj, Elm_Entry_Data *priv)
    edje_object_text_markup_filter_callback_add
      (priv->entry_edje, "elm.text", _markup_filter_cb, obj);
 
-   evas_object_event_callback_add
-     (priv->entry_edje, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, obj);
+   evas_object_event_callback_priority_add
+     (priv->entry_edje, EVAS_CALLBACK_KEY_DOWN, -1000, _key_down_cb, obj);
    evas_object_event_callback_add
      (priv->entry_edje, EVAS_CALLBACK_MOUSE_DOWN, _mouse_down_cb, obj);
    evas_object_event_callback_add

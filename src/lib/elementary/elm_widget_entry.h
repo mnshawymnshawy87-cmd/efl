@@ -83,6 +83,11 @@ struct _Elm_Entry_Data
         Evas_Object *hover; /**< hover object */
         const char  *hover_style; /**< style of a hover object */
      } anchor_hover;
+  struct
+    {
+      Eina_Bool (*func) (void *data, Evas_Object *obj, Evas_Event_Key_Down *ev);
+      void       *data;
+    } intercept;
 
    Elm_Cnp_Mode                          cnp_mode;
    Elm_Sel_Format                        drop_format;

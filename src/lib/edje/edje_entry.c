@@ -1771,6 +1771,7 @@ _edje_key_down_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
      return;
    if (!ev->key) return;
 
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    _edje_emit(ed, "entry,keydown", rp->part->name);
 #ifdef HAVE_ECORE_IMF
    if (en->imf_context)
