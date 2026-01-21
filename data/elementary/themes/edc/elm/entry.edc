@@ -143,6 +143,17 @@ group { name: "elm/scroller/entry/default";
    }
 }
 
+group { name: "elm/scroller/entry/blank";
+   inherit: "elm/scroller/entry/default";
+   parts {
+      part { name: "bg"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+      }
+   }
+}
+
 group { name: "elm/scroller/entry_single/default";
    alias: "elm/scroller/entry_single/combobox_vertical/default";
    images.image: "shadow_circle_vert.png" COMP;
@@ -411,6 +422,17 @@ group { name: "elm/scroller/entry_single/default";
       program { signal: "validation,default"; source: "elm";
          action: STATE_SET "default" 0.0;
          target: "validation_glow";
+      }
+   }
+}
+
+group { name: "elm/scroller/entry_single/blank";
+   inherit: "elm/scroller/entry_single/default";
+   parts {
+      part { name: "bg"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
       }
    }
 }
